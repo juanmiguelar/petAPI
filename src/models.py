@@ -17,3 +17,20 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+
+class Pet(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30), unique=False, nullable=False)
+    color = db.Column(db.String(30), unique=False, nullable=True)
+    age = db.Column(db.Integer, unique=False, nullable=True)
+
+    def __repr__(self):
+        return '<Pet %r>' % self.name
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "color": self.color,
+            "age": self.age,
+        }

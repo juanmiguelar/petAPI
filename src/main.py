@@ -8,7 +8,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User
+from models import db, User, Pet
 #from models import Person
 
 app = Flask(__name__)
@@ -38,6 +38,30 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@app.route('/pet', methods=['GET'])
+def handle_GetPet():
+    # Lista de mascotas
+    pets = Pet.query.all()
+    # Queremos convertir la lista de mascotas
+    # a una lista de mascotas serializadas
+    # SOLO PODEMOS USAR LAS SERIALIZADAS
+    result = map(lambda pet: pet.serialize(), pets)
+    
+    return jsonify(list(result)), 200
+
+@app.route('/pet', methods=['POST'])
+def handle_PostPet():
+    name = request.json.get("name", None)
+    color = request.json.get("color", None)
+    age = request.json.get("age", None)
+
+    newPet = Pet(name=name, color=color, age=age)
+    db.session.add(newPet)
+    db.session.commit()
+    
+    return "A new pet has been created", 200
+
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

@@ -50,7 +50,7 @@ For each endpoint you will need to have:
 1. One `@APP` decorator that specifies the path for the expoint.
     - You can have parameters in the url like this `<int:person_id>`
     - You can specify what methods can be called on that endpoint like this `methods=['PUT', 'GET']`
-2. The method what will execute when that endpoint is called (in this case `get_sinde_person`), the name of the method does not matter.
+2. The method what will execute when that endpoint is called (in this case `get_single_person`), the name of the method does not matter.
 3. Inside the method you can speficy what logic to execute of each type of request using `if request.method == 'PUT'`
 4. You have to return always a json and a status code (200,400,404, etc.)
 
